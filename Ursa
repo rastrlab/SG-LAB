@@ -1,0 +1,173 @@
+//I SEE YOU 02//
+
+await loadScript("https://hyper-hydra.glitch.me/hydra-text.js")
+
+hydraText.font = "serif"
+hydraText.lineWidth = "5%"
+str = " I SEE YOU "
+solid(1,.5)
+	.blend(src(o0).scale(1.02,0.8).colorama(.05))
+	.layer(text(str))
+//.diff(strokeText(str).modulateScale(noise(.1,.1), () =>0.005 ))
+.modulateScale(src(o0),() => mouse.x *0.005)
+//.brightness(0.14)
+.contrast(2)
+.luma(.9)
+.hue(.6)
+	.out(o3)
+
+osc(16,0.05,0)
+.kaleid(999)
+.layer
+	(shape(99,0.01,0.002)
+    .luma(.2,.8)
+     .rotate(1,.005)
+    )
+.modulate(osc(16,0.05,0),0.05)
+.diff(osc(16,0.05,1))
+.kaleid(99)
+.contrast(1.1)
+.rotate(0.5,0)
+.posterize(50)
+.out(o0)
+
+osc(10,0.1,0)
+.diff(o1)
+src(o1)
+.diff(o0)
+.layer(
+		src(o0)
+	.luma()
+	.scale(1.002)
+	.modulateRotate(src(o1)), .01
+)
+.scroll(.0005,()=>-.002)
+.layer(
+    osc(10,0.01,1.5)
+.mask(shape(4).scale(1,1,()=>window.innerWidth/window.innerHeight)
+)
+.rotate(0.1,0.05).add(src(o0)).modulate(src(o0),0.5))
+.modulate(src(o1),.05)
+.diff(src(o0))
+.brightness(0.14)
+.contrast(2)
+  .posterize(50)
+.color(.5,0,.2,0)
+.out(o1)
+
+render(o3);
+
+----------------------------
+
+// RAZKRAJANJE //
+// a.setBins(3) // amount of bins (bands) to separate the audio spectrum
+// //()=>a.fft[1]*.5) // listening to the 2nd band
+// a.setSmooth(.8) // audio reactivity smoothness from 0 to 1, uses linear interpolation
+// a.setScale(.8)    // loudness upper limit (maps to 0)
+// a.setCutoff(.01)   // loudness from which to start listening to (maps to 0)
+
+// a.show() // show what hydra's listening to
+// // a.hide()
+
+await loadScript("https://hyper-hydra.glitch.me/hydra-text.js")
+
+hydraText.font = "roman"
+hydraText.lineWidth = "5%"
+str = " RAZKRAJANJE "
+
+shape(99).scale(1.5,0.5)
+  
+	.mult(src(o1).scale(.5)).colorama(.05)
+	.layer(text(str))  
+.add(src(o3)).modulateScale(src(o1),() => mouse.y *0.005)
+//.scale(()=>a.fft[2]*.05)
+	.out(o2)
+
+  
+ osc(5,0.05,0)
+.posterize(50)
+.layer
+	(shape(4,0.01,0.002)
+ .diff(src(o1))
+.rotate(1,.05)
+  .scrollX(.5,()=>-.002)
+    )
+.modulate(src(o2),0.05)
+.add(osc(16,0.05,1))
+.rotate(0.5,0)
+.out(o0)
+
+
+osc(5,0,0)
+.mult(src(o0))
+ .layer(
+   (src(o0)
+)
+.mask(osc(2,0.05,0))
+.rotate(0.1,0.05)
+.modulate(src(o0),0.5))
+.modulateRotate(osc(10,0,0),() => mouse.x *0.005)
+.modulate(src(o0),.05)
+.color(0.5,0.3,0.6)
+//.hue(.6)
+//.scale(()=>a.fft[2]*.05)
+.out(o1)
+
+speed=.5
+shape(99)
+  .scale(2,.5).scroll(() => mouse.x *-.0005).scrollY(.5,0)
+  .mult(src(o1)).modulateScale(src(o2),2)
+.scale(1)
+.modulate(src(o3))
+.contrast(0.9)
+
+  .out(o3)
+
+
+
+render(o2)
+
+----------------------------------
+
+// TAKE A LOOK //
+
+
+speed=.5
+await loadScript("https://hyper-hydra.glitch.me/hydra-text.js")
+
+hydraText.font = "serif"
+hydraText.lineWidth = "5%"
+str = " TAKE A LOOK "
+solid(1,.5)
+	.blend(src(o1).scale(1.02,0.8).colorama(.05))
+	.layer(text(str)).scale(.5)
+//.diff(strokeText(str).modulateScale(noise(.1,.1), () =>0.005 ))
+.modulateScale(src(o0),() => .5)
+//.brightness(0.14)
+.contrast(2)
+.luma(.9)
+.hue(.6)
+	.out(o3)
+speed=.5
+shape(99,.5,.1).scale(1,0.5)
+.scrollX(() => mouse.x * -0.005,-0.05)
+.diff(src(o3)).modulateScale(src(o3),5)
+.out(o0)
+
+osc(10,0.1,0)
+.add(o0)
+.scroll(.0005,() => mouse.x *-.0005)
+.layer(osc(10,0.01,1.5)
+ 	.mask(shape(999).scale(1,1,()=>window.innerWidth/window.innerHeight))
+.rotate(0.1,0.05).mult(src(o1)).modulate(src(o0),5))
+//.posterize(50)
+.color(0,.5,0.8,0)
+.add(src(o0))
+.brightness(0.14)
+.contrast(2)
+.scrollY(.5,()=>-.2)
+.modulate(src(o0),5).scrollY(.05,()=>.02)
+.repeat(2,2,0)
+.out(o1)
+
+render(o0)
